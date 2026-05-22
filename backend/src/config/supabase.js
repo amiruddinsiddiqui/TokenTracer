@@ -1,11 +1,23 @@
 import { createClient } from "@supabase/supabase-js";
-import dotenv from "dotenv";
+import config from "./config.js";
 
-dotenv.config();
 
-const supabase = createClient(
-    process.env.SUPABASE_URL,
-    process.env.SUPABASE_KEY
-);
+class SupabaseSingleton {
+    static instance = null;
+
+    static getInstance() {
+        if (!SupabaseSingleton.instance) {
+            SupabaseSingleton.instance = createClient(
+                config.supabase.supabase_url,
+                config.supabase.supabase_secret_key
+            );
+        }
+        return SupabaseSingleton.instance;
+    }
+}
+
+const supabase = SupabaseSingleton.getInstance();
+
+export { SupabaseSingleton };
 
 export default supabase;

@@ -1,20 +1,47 @@
-import supabase from "../config/supabase.js";
+import ResponseFormatter from "../utils/responseFormatter.js";
 
-export const createLead = async (req, res) => {
-    const { email, company, role } = req.body;
+class LeadController {
 
-    const { error } = await supabase
-        .from("leads")
-        .insert([{ email, company, role }]);
-
-    if (error) {
-        return res.status(500).json({
-            success: false,
-            error: error.message
-        });
+    constructor(leadRepository, emailService) {
+        this.leadRepository = leadRepository;
+        this.emailService = emailService;
     }
 
-    res.status(201).json({
-        success: true,
-    });
-};
+    async createLead(req, res, next) {
+
+        try {
+            const {
+                email,
+                company,
+                role,
+                teamSize
+            } = req.body;
+
+            const lead =
+                await this.leadRepository
+                    .createLead({
+                        email,
+                        company,
+                        role,
+                        team_size: teamSize
+                    });
+
+            await this.emailService
+                .sendAuditEmail(
+                    email
+                );
+
+            return res.status(201).json(
+                ResponseFormatter.success(
+                    lead,
+                    "Lead captured successfully"
+                )
+            );
+
+        } catch (e) {
+            next(e);
+        }
+    }
+}
+
+export default LeadController;
