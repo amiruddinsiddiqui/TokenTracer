@@ -1,77 +1,54 @@
-import AuditRepository from "../repositories/audit.repository.js";
-import LeadRepository from "../repositories/lead.repository.js";
-import ShareRepository from "../repositories/share.repository.js";
+import AuditRepository from '../repositories/audit.repository.js';
+import LeadRepository from '../repositories/lead.repository.js';
+import ShareRepository from '../repositories/share.repository.js';
 
-import AuditService from "../services/auditEngine/audit.service.js";
-import ShareService from "../services/share/share.service.js";
-import EmailService from "../services/email/email.service.js";
-import SummaryService from "../services/ai/summary.service.js";
+import AuditService from '../services/auditEngine/audit.service.js';
+import ShareService from '../services/share/share.service.js';
+import LeadService from '../services/lead/lead.service.js';
 
-import AuditController from "../controllers/audit.controller.js";
-import LeadController from "../controllers/lead.controller.js";
-import ShareController from "../controllers/share.controller.js";
+import AuditController from '../controllers/audit.controller.js';
+import LeadController from '../controllers/lead.controller.js';
+import ShareController from '../controllers/share.controller.js';
+import ReportController from '../controllers/report.controller.js';
 
 class Container {
-
     static init() {
-
-        // =========================
-        // Repositories
-        // =========================
-
         const repositories = {
             auditRepository: AuditRepository,
             leadRepository: LeadRepository,
-            shareRepository: ShareRepository
+            shareRepository: ShareRepository,
         };
 
-        // =========================
-        // Services
-        // =========================
-
         const services = {
-
             auditService: new AuditService({
-                auditRepository: repositories.auditRepository
+                auditRepository: repositories.auditRepository,
             }),
 
             shareService: new ShareService({
-                shareRepository: repositories.shareRepository
+                shareRepository: repositories.shareRepository,
             }),
 
-            emailService: new EmailService(),
-
-            summaryService: new SummaryService()
+            leadService: new LeadService({
+                leadRepository: repositories.leadRepository,
+                auditRepository: repositories.auditRepository,
+            }),
         };
-
-        // =========================
-        // Controllers
-        // =========================
 
         const controllers = {
+            auditController: new AuditController(services.auditService),
 
-            auditController: new AuditController(
-                services.auditService
+            reportController: new ReportController(
+                services.auditService,
+                services.shareService,
             ),
 
-            leadController: new LeadController(
-                repositories.leadRepository,
-                services.emailService
-            ),
+            leadController: new LeadController(services.leadService),
 
-            shareController: new ShareController(
-                services.shareService
-            )
+            shareController: new ShareController(services.shareService),
         };
 
-        return {
-            repositories,
-            services,
-            controllers
-        };
+        return { repositories, services, controllers };
     }
 }
 
-const initialized = Container.init();
-
-export default initialized;
+export default Container.init();

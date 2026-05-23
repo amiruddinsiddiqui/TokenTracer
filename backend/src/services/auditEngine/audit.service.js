@@ -1,34 +1,19 @@
-// class AuditService {
-//
-//     constructor({ auditRepository }) {
-//         this.auditRepository = auditRepository;
-//     }
-//
-//     async createAudit(auditData) {
-//
-//         return this.auditRepository.createAudit(auditData);
-//     }
-//
-//     async getAudit(id) {
-//
-//         return await this.auditRepository.findById(
-//             id
-//         );
-//     }
-// }
-//
-// export default AuditService;
-
-
-// services/auditEngine/audit.service.js
 
 import calculateSavings from "./calculateSavings.js";
 import pricingRules from "./pricingRules.js";
+import createPublicAudit from '../share/createPublicAudit.js';
+import config from '../../config/config.js';
 
 class AuditService {
 
     constructor({ auditRepository }) {
         this.auditRepository = auditRepository;
+    }
+
+    async getAudit(id) {
+
+        return await this.auditRepository
+            .findById(id);
     }
 
     async createAudit(auditData) {
@@ -286,8 +271,7 @@ class AuditService {
                 recommendedSpend
             });
 
-            totalMonthlySavings +=
-                savings.monthlySavings;
+            totalMonthlySavings += savings.monthlySavings;
 
             recommendations.push({
                 tool: tool.name,
@@ -304,16 +288,37 @@ class AuditService {
             });
         }
 
+        const totalAnnualSavings =
+            totalMonthlySavings * 12;
+
+        const { publicId, shareUrl } =
+            createPublicAudit(config.appBaseUrl);
+
         const auditPayload = {
-            ...auditData,
+            tools: auditData.tools,
+            use_case: auditData.useCase,
             recommendations,
+            total_monthly_savings:
             totalMonthlySavings,
-            totalAnnualSavings:
-                totalMonthlySavings * 12
+            total_annual_savings:
+            totalAnnualSavings,
+            public_id: publicId
         };
 
-        return await this.auditRepository
-            .createAudit(auditPayload);
+        const saved =
+            await this.auditRepository
+                .createAudit(auditPayload);
+
+        return {
+            id: saved.id,
+            useCase: auditData.useCase,
+            recommendations,
+            totalMonthlySavings,
+            totalAnnualSavings,
+            publicId,
+            shareUrl
+        };
+
     }
 }
 

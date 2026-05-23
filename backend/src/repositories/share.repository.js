@@ -1,4 +1,5 @@
 import supabase from "../config/supabase.js";
+import AppError from "../utils/AppError.js";
 
 class ShareRepository {
 
@@ -11,6 +12,9 @@ class ShareRepository {
             .single();
 
         if (error) {
+            if (error.code === 'PGRST116') {
+                throw new AppError('Shared audit not found', 404);
+            }
             throw error;
         }
 

@@ -1,43 +1,34 @@
-import ResponseFormatter from "../utils/responseFormatter.js";
+import ResponseFormatter from '../utils/responseFormatter.js';
 
 class LeadController {
-
-    constructor(leadRepository, emailService) {
-        this.leadRepository = leadRepository;
-        this.emailService = emailService;
+    constructor(leadService) {
+        this.leadService = leadService;
     }
 
     async createLead(req, res, next) {
-
         try {
-            const {
+            if (req.honeypotTriggered) {
+                return res.status(201).json(
+                    ResponseFormatter.success(
+                        { accepted: true },
+                        'Lead captured successfully',
+                    ),
+                );
+            }
+
+            const { email, company, role, teamSize, auditId } = req.body;
+
+            const lead = await this.leadService.captureLead({
                 email,
                 company,
                 role,
-                teamSize
-            } = req.body;
-
-            const lead =
-                await this.leadRepository
-                    .createLead({
-                        email,
-                        company,
-                        role,
-                        team_size: teamSize
-                    });
-
-            await this.emailService
-                .sendAuditEmail(
-                    email
-                );
+                teamSize,
+                auditId,
+            });
 
             return res.status(201).json(
-                ResponseFormatter.success(
-                    lead,
-                    "Lead captured successfully"
-                )
+                ResponseFormatter.success(lead, 'Lead captured successfully'),
             );
-
         } catch (e) {
             next(e);
         }

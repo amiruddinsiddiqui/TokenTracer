@@ -18,6 +18,15 @@ const config = {
         expiresIn: process.env.JWT_EXPIRES_IN || '1d'
     },
 
+    appBaseUrl: process.env.APP_URL || `http://localhost:${parseInt(process.env.PORT || '3000', 10)}`,
+
+    resend: {
+        apiKey: process.env.RESEND_API_KEY || null,
+        fromEmail:
+            process.env.RESEND_FROM_EMAIL ||
+            'Token Tracer <onboarding@resend.dev>',
+    },
+
     rateLimit: {
         windowMs: parseInt(process.env.RATE_LIMIT_WINDOW_MS || '900000', 10), //15 minutes
         maxRequests: parseInt(process.env.RATE_LIMIT_MAX_REQUESTS || '1000', 10), // 1000 req per 15 min per IP address

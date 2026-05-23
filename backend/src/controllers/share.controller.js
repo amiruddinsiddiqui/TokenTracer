@@ -1,27 +1,20 @@
-import ResponseFormatter from "../utils/responseFormatter.js";
+import ResponseFormatter from '../utils/responseFormatter.js';
 
 class ShareController {
-
-    constructor(auditService) {
-        this.auditService = auditService;
+    constructor(shareService) {
+        this.shareService = shareService;
     }
 
-    async createAudit(req, res, next) {
-
+    async getPublicAudit(req, res, next) {
         try {
+            const result = await this.shareService.getPublicAudit(req.params.id);
 
-            const audit =
-                await this.auditService.createAudit(
-                    req.body
-                );
-
-            return res.status(201).json(
+            return res.status(200).json(
                 ResponseFormatter.success(
-                    audit,
-                    "Audit created successfully"
-                )
+                    result,
+                    'Public audit retrieved successfully',
+                ),
             );
-
         } catch (e) {
             next(e);
         }

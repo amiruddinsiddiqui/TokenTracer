@@ -9,7 +9,9 @@ import cookieParser from "cookie-parser";
 import supabase from "./config/supabase.js";
 
 import leadRoutes from "./routes/lead.route.js"
-
+import auditRoutes from './routes/audit.route.js';
+import shareRoutes from './routes/share.route.js';
+import apiRateLimiter from "./middlewares/rateLimit.middleware.js";
 
 // Initialize Express app
 const app = express();
@@ -33,6 +35,8 @@ app.use((req, res, next) => {
     next();
 })
 
+// ratelimit global middleware
+app.use('/', apiRateLimiter);
 
 // health check
 app.get('/health', (req, res) => {
@@ -52,13 +56,15 @@ app.get('/', (req, res) => {
     res.status(200).json(
         ResponseFormatter.success(
             {
-                service: 'Token Tracer App',
+                service: 'Token Tracer API',
                 version: '1.0.0',
                 endpoint: {
                     health: '/health',
-                    auth: '/api/auth',
-                    ingest: '/api/hit',
-                    analytics: '/api/analytics',
+                    createAudit: 'POST /api/audit',
+                    getAudit: 'GET /api/audit/:id',
+                    captureLead: 'POST /api/leads',
+                    publicShare: 'GET /api/share/:id',
+                    sharePdf: 'GET /api/share/:id/pdf',
                 },
             },
             'Token Tracer App'
@@ -67,9 +73,9 @@ app.get('/', (req, res) => {
 })
 
 
-app.use("/api/leads", leadRoutes);
-// app.use("/api/audit", auditRoutes);
-// app.use("/api/share", shareRoutes);
+app.use('/api/audit', auditRoutes);
+app.use('/api/leads', leadRoutes);
+app.use('/api/share', shareRoutes);
 
 
 app.use((req, res) => {
