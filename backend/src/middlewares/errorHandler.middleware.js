@@ -3,9 +3,24 @@ import ResponseFormatter from "../utils/responseFormatter.js";
 
 
 const errorHandlerMiddleware = (error, req, res, next) => {
-    let statusCode = req.statusCode || 500;
+    let statusCode = error.statusCode || 500;
     let message = error.message || "Internal server error";
     let errors = error.errors || null;
+
+    if (error.isOperational && error.statusCode) {
+        statusCode = error.statusCode;
+    }
+
+    if (error.code === 'PGRST116') {
+        statusCode = 404;
+        message = 'Resource not found';
+    }
+
+    if (error.code === 'PGRST205') {
+        statusCode = 503;
+        message =
+            'Database table missing. Run backend/supabase/schema.sql in Supabase.';
+    }
 
     logger.error('Error occurred:', {
         message:error.message,
