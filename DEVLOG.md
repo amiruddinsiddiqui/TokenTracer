@@ -1,4 +1,4 @@
-## Day 1 — 2026-05-22
+## Day 1 — 2026-05-21
 
 **Hours worked:** 2
 
@@ -14,7 +14,7 @@ Had issues with dotenv loading correctly because Node was being run from the wro
 **Plan for tomorrow:**  
 Implement the audit engine and pricing recommendation logic.
 
-## Day 2 — 2026-05-23
+## Day 2 — 2026-05-22
 
 **Hours worked:** 3
 
@@ -45,3 +45,20 @@ Spent time fixing public audit UUID generation, and resolving Resend 403 authori
 
 **Plan for tomorrow:**  
 Implement AI-generated audit summaries using an LLM API, improve recommendation quality, and add fallback/error handling for AI summary generation.
+
+
+## Day 4 — 2026-05-24
+
+**Hours worked:** 5
+
+**What I did:**  
+Implemented AI-generated audit summaries using the Gemini API and integrated them into the audit generation flow. Added automated audit engine tests using Vitest and configured a GitHub Actions CI workflow to run tests automatically on every push to main.
+
+**What I learned:**  
+Learned how to mock external API calls during unit testing and configure automated CI pipelines using GitHub Actions.
+
+**Blockers / what I'm stuck on:**  
+Spent time debugging Gemini API model mismatch and quota issues. Tested the API manually using curl to identify supported models and fixed the integration by switching to a working Gemini model configuration.
+
+**Plan for tomorrow:**  
+Start building the frontend UI, connect frontend and backend APIs, and polish the overall project structure and user experience.
