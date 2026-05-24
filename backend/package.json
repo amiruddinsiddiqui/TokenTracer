@@ -1,20 +1,31 @@
 {
-  "name": "backend",
+  "name": "backend-TokenTracer",
   "version": "1.0.0",
   "description": "Track, audit, and optimize your AI subscription and API expenses.",
   "main": "src/server.js",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js",
+    "migrate": "node scripts/migrate.js",
+    "test": "vitest run"
   },
   "author": "Amiruddin",
   "license": "ISC",
   "dependencies": {
+    "@google/generative-ai": "^0.24.1",
     "@supabase/supabase-js": "^2.106.1",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.6",
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
+    "express-rate-limit": "^8.2.1",
+    "helmet": "^8.1.0",
+    "nodemon": "^3.1.14",
     "winston": "^3.19.0"
+  },
+  "devDependencies": {
+    "pg": "^8.16.0",
+    "vitest": "^4.1.7"
   }
 }
