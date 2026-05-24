@@ -3,6 +3,7 @@ import calculateSavings from "./calculateSavings.js";
 import pricingRules from "./pricingRules.js";
 import createPublicAudit from '../share/createPublicAudit.js';
 import config from '../../config/config.js';
+import generateSummary from '../ai/summary.service.js';
 
 class AuditService {
 
@@ -288,8 +289,14 @@ class AuditService {
             });
         }
 
-        const totalAnnualSavings =
-            totalMonthlySavings * 12;
+        const totalAnnualSavings = totalMonthlySavings * 12;
+
+        const summary = await generateSummary({
+                useCase: auditData.useCase,
+                recommendations,
+                totalMonthlySavings,
+                totalAnnualSavings,
+            });
 
         const { publicId, shareUrl } =
             createPublicAudit(config.appBaseUrl);
@@ -302,6 +309,7 @@ class AuditService {
             totalMonthlySavings,
             total_annual_savings:
             totalAnnualSavings,
+            summary,
             public_id: publicId
         };
 
@@ -315,6 +323,7 @@ class AuditService {
             recommendations,
             totalMonthlySavings,
             totalAnnualSavings,
+            summary,
             publicId,
             shareUrl
         };
