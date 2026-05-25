@@ -19,8 +19,8 @@ const app = express();
 // middlewares
 app.use(helmet());
 app.use(cors({
-    origin: true,
-    credentials: true,
+    origin: config.frontendUrl.url,
+    methods: ["GET", "POST"]
 }));
 
 app.use(cookieParser());

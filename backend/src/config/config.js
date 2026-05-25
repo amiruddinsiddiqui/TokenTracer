@@ -18,7 +18,7 @@ const config = {
         expiresIn: process.env.JWT_EXPIRES_IN || '1d'
     },
 
-    appBaseUrl: process.env.APP_URL || `http://localhost:${parseInt(process.env.PORT || '3000', 10)}`,
+    appBaseUrl: process.env.FRONTEND_URL || `http://localhost:${parseInt('5173', 10)}`,
 
     resend: {
         apiKey: process.env.RESEND_API_KEY || null,
@@ -29,6 +29,10 @@ const config = {
 
     geminiAI: {
         apiKey: process.env.GEMINI_API_KEY || '',
+    },
+
+    frontendUrl: {
+        url: process.env.FRONTEND_URL
     },
 
     rateLimit: {

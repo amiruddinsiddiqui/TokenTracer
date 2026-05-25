@@ -35,6 +35,8 @@ async function generateSummary(data) {
     $${data.totalAnnualSavings}
     
     Keep the response under 120 words.
+    Return plain text only.
+    Do not use markdown, asterisks, bullets, or formatting symbols.
     `;
 
     try {

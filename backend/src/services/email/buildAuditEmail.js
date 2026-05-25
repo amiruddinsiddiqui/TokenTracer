@@ -23,7 +23,7 @@ export function buildAuditEmailHtml({ email, audit, shareUrl }) {
     const credexBlock = showTokenTracer
         ? `<p style="margin:16px 0;padding:12px;background:#f0fdf4;border-left:4px solid #16a34a;">
         <strong>High savings detected.</strong> TokenTracer helps startups buy discounted AI tool credits (Cursor, Claude, ChatGPT Enterprise, and more).
-        <a href="https://amiruddin.is-a.dev">Book a consultation</a> to capture savings beyond plan changes.
+        <a href="https://token-tracer-jjngrnojy-amirvsidd-2766s-projects.vercel.app/">Book a consultation</a> to capture savings beyond plan changes.
       </p>`
         : '';
 
