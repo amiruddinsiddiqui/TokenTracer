@@ -1,4 +1,4 @@
-import config from "./config";
+import config from "../../config/config.js";
 
 function formatMoney(n) {
     return `$${Number(n ?? 0).toLocaleString('en-US', { maximumFractionDigits: 0 })}`;
