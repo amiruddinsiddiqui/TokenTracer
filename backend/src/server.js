@@ -35,6 +35,8 @@ app.use((req, res, next) => {
     next();
 })
 
+app.set('trust proxy', 1);
+
 // ratelimit global middleware
 app.use('/', apiRateLimiter);
 
