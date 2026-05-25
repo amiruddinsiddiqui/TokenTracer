@@ -17,7 +17,7 @@ export default async function sendAuditMail(email, audit) {
     }
 
     const sharePath = audit?.public_id
-        ? `/api/share/${audit.public_id}`
+        ? `/share/${audit.public_id}`
         : null;
     const shareUrl = sharePath ? `${config.appBaseUrl}${sharePath}` : null;
 
