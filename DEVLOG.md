@@ -66,10 +66,10 @@ Start building the frontend UI, connect frontend and backend APIs, and polish th
 
 ## Day 5 — 2026-05-25
 
-**Hours worked:** 4
+**Hours worked:** 6
 
 **What I did:**  
-Built the frontend UI for Token Tracer and connected it with the backend audit APIs. Added landing page sections including hero content, FAQ, social proof(mock).
+Built the frontend UI for Token Tracer and connected it with the backend audit APIs. Added landing page sections including hero content, FAQ, social proof (mock), and deployed the frontend on Vercel and the backend on Render.
 
 **What I learned:**  
 Learned how to connect frontend forms with backend APIs, handle async audit responses, and structure frontend components for a cleaner and more maintainable UI workflow.
@@ -78,4 +78,4 @@ Learned how to connect frontend forms with backend APIs, handle async audit resp
 Faced issues with rendering Gemini-generated markdown responses in the frontend because raw markdown symbols like `**` appeared directly in the UI. Resolved it by improving the LLM Prompt.
 
 **Plan for tomorrow:**
-Polish the overall backend and frontend, fix remaining bugs, and deploy the application to the internet.
+Polish the overall backend and frontend, fix remaining bugs, and create the ARCHITECTURE.md documentation with system diagrams and data flow explanations.
