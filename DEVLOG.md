@@ -79,3 +79,20 @@ Faced issues with rendering Gemini-generated markdown responses in the frontend 
 
 **Plan for tomorrow:**
 Polish the overall backend and frontend, fix remaining bugs, and create the ARCHITECTURE.md documentation with system diagrams and data flow explanations.
+
+
+## Day 6 — 2026-05-26
+
+**Hours worked:** 5
+
+**What I did:**  
+Made token tracer demo video and uploaded it on the YouTube, completed the README and ARCHITECTURE documentation files. Also tested Lighthouse mobile scores and optimized the deployed frontend.
+
+**What I learned:**  
+Learned more about deploying frontend and backend applications using Vercel and Render, along with handling CORS and production environment issues.
+
+**Blockers / what I'm stuck on:**  
+Faced issues with SPA routing on Vercel and backend deployment errors on Render. Fixed them by adding `vercel.json`, correcting imports, and configuring Express proxy settings.
+
+**Plan for tomorrow:**  
+Complete the remaining entrepreneurial documents (GTM, economics, metrics, reflection, and user interviews), do final end-to-end testing, improve overall polish, and prepare the final submission.
